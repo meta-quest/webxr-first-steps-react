@@ -8,6 +8,7 @@
 import { Environment, PerspectiveCamera } from "@react-three/drei";
 import { XR, createXRStore } from "@react-three/xr";
 
+import { Bullets } from "./bullets";
 import { Canvas } from "@react-three/fiber";
 import { Gun } from "./gun";
 import React from "react";
@@ -66,6 +67,7 @@ const App = () => {
           <sphereGeometry args={[0.4]} />
           <meshStandardMaterial color="red" />
         </mesh>
+        <Bullets />
         <XR store={xrStore}></XR>
       </Canvas>
       <div
