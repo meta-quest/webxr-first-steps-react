@@ -10,6 +10,7 @@ import { Mesh, Quaternion, Vector3 } from "three";
 import React from "react";
 import { create } from "zustand";
 import { generateUUID } from "three/src/math/MathUtils";
+import gsap from "gsap";
 import { targets } from "./targets";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
@@ -53,27 +54,21 @@ export const useBulletStore = create<BulletStore>((set) => ({
 
 export const Bullets = () => {
   const bullets = useBulletStore((state) => state.bullets);
-  const { scene } = useGLTF("assets/blaster.glb");
-  const bulletPrototype = scene.getObjectByName("bullet")!;
-  if (!bulletPrototype) return null;
   return (
     <>
       {bullets.map((bulletData) => (
-        <Bullet
-          bulletPrototype={bulletPrototype as Mesh}
-          bulletData={bulletData}
-          key={bulletData.id}
-        />
+        <Bullet bulletData={bulletData} key={bulletData.id} />
       ))}
     </>
   );
 };
 
 type BulletProps = {
-  bulletPrototype: Mesh;
   bulletData: BulletData;
 };
-const Bullet = ({ bulletPrototype, bulletData }: BulletProps) => {
+const Bullet = ({ bulletData }: BulletProps) => {
+  const { scene } = useGLTF("assets/blaster.glb");
+  const bulletPrototype = scene.getObjectByName("bullet")! as Mesh;
   const ref = React.useRef<Mesh>(null);
   useFrame(() => {
     const now = performance.now();
@@ -95,12 +90,28 @@ const Bullet = ({ bulletPrototype, bulletData }: BulletProps) => {
         if (distance < 1) {
           useBulletStore.getState().removeBullet(bulletData.id);
 
-          target.visible = false;
-          setTimeout(() => {
-            target.visible = true;
-            target.position.x = Math.random() * 10 - 5;
-            target.position.z = -Math.random() * 5 - 5;
-          }, 2000);
+          gsap.to(target.scale, {
+            duration: 0.3,
+            x: 0,
+            y: 0,
+            z: 0,
+            onComplete: () => {
+              target.visible = false;
+              setTimeout(() => {
+                target.visible = true;
+                target.position.x = Math.random() * 10 - 5;
+                target.position.z = -Math.random() * 5 - 5;
+
+                // Scale back up the target
+                gsap.to(target.scale, {
+                  duration: 0.3,
+                  x: 1,
+                  y: 1,
+                  z: 1,
+                });
+              }, 1000);
+            },
+          });
 
           useScoreStore.getState().addScore();
         }
@@ -112,7 +123,7 @@ const Bullet = ({ bulletPrototype, bulletData }: BulletProps) => {
       ref={ref}
       geometry={bulletPrototype.geometry}
       material={bulletPrototype.material}
-      quaternion={bulletData.initQuaternion.toArray()}
+      quaternion={bulletData.initQuaternion}
     ></mesh>
   );
 };
