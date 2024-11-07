@@ -2,7 +2,7 @@
     <img src="./tutorial/assets/webxr-first-steps.png" style="max-width:376px"/>
 </p>
 
-Welcome to **WebXR First Steps**! This **2-hour** tutorial is designed to help you take your first steps into developing immersive WebXR experiences using [Three.js](https://threejs.org/). Whether you’re a web developer looking to expand your skillset or a hobbyist interested in creating virtual reality (VR) applications, this tutorial will guide you through the fundamentals of building interactive 3D worlds for the web.
+Welcome to **WebXR First Steps (React)**! This **2-hour** tutorial is designed to help you take your first steps into developing immersive WebXR experiences using [React Three XR](https://pmndrs.github.io/xr/docs/getting-started/introduction). Whether you’re a web developer looking to expand your skillset or a hobbyist interested in creating virtual reality (VR) applications, this tutorial will guide you through the fundamentals of building interactive 3D worlds for the web.
 
 ## What You’ll Build
 
@@ -20,8 +20,8 @@ To prepare your development environment and get started with building your WebXR
 1. **Clone this repository**:
 
    ```bash
-   git clone git@github.com:meta-quest/webxr-first-steps.git
-   cd webxr-first-steps
+   git clone git@github.com:meta-quest/webxr-first-steps-react.git
+   cd webxr-first-steps-react
    ```
 
 2. **Verify that you have Node.js and npm installed**:
@@ -81,9 +81,9 @@ You can now access the local server on your headset by entering `https://localho
 
 ### Developing with an Emulator
 
-This project includes a built-in emulation setup located in `./src/init.js`, powered by [IWER](https://github.com/meta-quest/immersive-web-emulation-runtime/) (Immersive Web Emulation Runtime) and [@iwer/devui](https://github.com/meta-quest/immersive-web-emulation-runtime/tree/main/devui). The emulation setup automatically detects native WebXR support in your browser and activates itself if no native WebXR support is found.
+This project includes a built-in emulation setup as part of `@react-three/xr`, powered by [IWER](https://github.com/meta-quest/immersive-web-emulation-runtime/) (Immersive Web Emulation Runtime) and [@iwer/devui](https://github.com/meta-quest/immersive-web-emulation-runtime/tree/main/devui). When developing on `localhost`, the emulation setup automatically detects native WebXR support in your browser and activates itself if no native WebXR support is found.
 
-If you're already using the [Immersive Web Emulator browser extension](https://chromewebstore.google.com/detail/immersive-web-emulator/cgffilbpcibhmcfbgggfhfolhkfbhmik), the built-in emulation will not conflict with it, and you can safely skip this section. However, if you use other WebXR emulators, we recommend disabling them and using the built-in emulation setup for the best results.
+If you're already using the [Immersive Web Emulator browser extension](https://chromewebstore.google.com/detail/immersive-web-emulator/cgffilbpcibhmcfbgggfhfolhkfbhmik), please disable it temporarily because the built-in emulation will conflict with it.
 
 - **IWER** is a full WebXR runtime, and **@iwer/devui** provides a developer interface that exposes control over the emulated XR device created by IWER. With this setup, you can manipulate headset and controller transforms, and simulate input events for the emulated controllers.
 - Additionally, you can leverage the **"Play Mode"** button on the top bar of the interface. This feature locks your cursor and allows you to control the emulated XR device like a first-person 3D experience on a PC.
@@ -100,7 +100,7 @@ Here’s a showcase of the emulation setup in action:
 This tutorial is structured into chapters to help you progressively build your WebXR game. Follow each chapter in sequence, as each builds upon concepts introduced in the previous ones.
 
 - [**Chapter 1: Creating Simple Objects**](./tutorial/chapter1.md): Learn how to add basic 3D shapes like cubes, spheres, and cones to your scene.
-- [**Chapter 2: Interacting with Controllers**](./tutorial/chapter2.md): Implement VR controller interactions and trigger actions based on user input.
+- [**Chapter 2: Spawning Bullets from Controller**](./tutorial/chapter2.md): Implement VR controller interactions and trigger actions based on user input.
 - [**Chapter 3: Animating Objects**](./tutorial/chapter3.md): Make bullets move in the direction of the controller, and learn about time-based animation in WebXR.
 - [**Chapter 4: Loading GLTF Models**](./tutorial/chapter4.md): Replace simple geometries with more complex, detailed 3D models using the GLTF format.
 - [**Chapter 5: Hit Detection and Score Tracking**](./tutorial/chapter5.md): Implement proximity-based hit detection, track player progress, and display scores.
