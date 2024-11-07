@@ -33,5 +33,4 @@ export const Gun = () => {
   return <primitive object={scene} />;
 };
 
-// preload the gun model so that it's ready when the user enters VR
 useGLTF.preload("assets/blaster.glb");

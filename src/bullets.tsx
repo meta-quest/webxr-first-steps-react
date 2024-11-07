@@ -10,8 +10,10 @@ import { Mesh, Quaternion, Vector3 } from "three";
 import React from "react";
 import { create } from "zustand";
 import { generateUUID } from "three/src/math/MathUtils";
+import { targets } from "./targets";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
+import { useScoreStore } from "./score";
 
 const bulletSpeed = 10;
 const forwardVector = new Vector3(0, 0, -1);
@@ -51,21 +53,27 @@ export const useBulletStore = create<BulletStore>((set) => ({
 
 export const Bullets = () => {
   const bullets = useBulletStore((state) => state.bullets);
+  const { scene } = useGLTF("assets/blaster.glb");
+  const bulletPrototype = scene.getObjectByName("bullet")!;
+  if (!bulletPrototype) return null;
   return (
     <>
       {bullets.map((bulletData) => (
-        <Bullet bulletData={bulletData} key={bulletData.id} />
+        <Bullet
+          bulletPrototype={bulletPrototype as Mesh}
+          bulletData={bulletData}
+          key={bulletData.id}
+        />
       ))}
     </>
   );
 };
 
 type BulletProps = {
+  bulletPrototype: Mesh;
   bulletData: BulletData;
 };
-const Bullet = ({ bulletData }: BulletProps) => {
-  const { scene } = useGLTF("assets/blaster.glb");
-  const bulletPrototype = scene.getObjectByName("bullet")! as Mesh;
+const Bullet = ({ bulletPrototype, bulletData }: BulletProps) => {
   const ref = React.useRef<Mesh>(null);
   useFrame(() => {
     const now = performance.now();
@@ -79,6 +87,24 @@ const Bullet = ({ bulletData }: BulletProps) => {
         (bulletSpeed * (now - bulletData.timestamp)) / 1000
       )
     );
+
+    [...targets]
+      .filter((target) => target.visible)
+      .forEach((target) => {
+        const distance = target.position.distanceTo(bulletObject.position);
+        if (distance < 1) {
+          useBulletStore.getState().removeBullet(bulletData.id);
+
+          target.visible = false;
+          setTimeout(() => {
+            target.visible = true;
+            target.position.x = Math.random() * 10 - 5;
+            target.position.z = -Math.random() * 5 - 5;
+          }, 2000);
+
+          useScoreStore.getState().addScore();
+        }
+      });
   });
 
   return (
@@ -86,7 +112,7 @@ const Bullet = ({ bulletData }: BulletProps) => {
       ref={ref}
       geometry={bulletPrototype.geometry}
       material={bulletPrototype.material}
-      quaternion={bulletData.initQuaternion}
+      quaternion={bulletData.initQuaternion.toArray()}
     ></mesh>
   );
 };
