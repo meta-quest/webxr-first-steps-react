@@ -5,20 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Quaternion, Vector3 } from "three";
+import { Mesh, Quaternion, Vector3 } from "three";
 
 import React from "react";
 import { create } from "zustand";
-import { generateUUID } from "three/src/math/MathUtils.js";
+import { generateUUID } from "three/src/math/MathUtils";
+import { useFrame } from "@react-three/fiber";
+
+const bulletSpeed = 10;
+const forwardVector = new Vector3(0, 0, -1);
+const bulletTimeToLive = 2;
 
 type BulletData = {
   id: string;
   initPosition: Vector3;
   initQuaternion: Quaternion;
+  timestamp: number;
 };
 type BulletStore = {
   bullets: BulletData[];
   addBullet: (position: Vector3, quaternion: Quaternion) => void;
+  removeBullet: (bulletId: string) => void;
 };
 export const useBulletStore = create<BulletStore>((set) => ({
   bullets: [],
@@ -28,9 +35,17 @@ export const useBulletStore = create<BulletStore>((set) => ({
         id: generateUUID(),
         initPosition: position,
         initQuaternion: quaternion,
+        timestamp: performance.now(),
       };
+      setTimeout(() => {
+        state.removeBullet(newBullet.id);
+      }, bulletTimeToLive * 1000);
       return { bullets: [...state.bullets, newBullet] };
     }),
+  removeBullet: (bulletId) =>
+    set((state) => ({
+      bullets: state.bullets.filter((bullet) => bullet.id !== bulletId),
+    })),
 }));
 
 export const Bullets = () => {
@@ -48,11 +63,23 @@ type BulletProps = {
   bulletData: BulletData;
 };
 const Bullet = ({ bulletData }: BulletProps) => {
+  const ref = React.useRef<Mesh>(null);
+  useFrame(() => {
+    const now = performance.now();
+    const bulletObject = ref.current!;
+    const directionVector = forwardVector
+      .clone()
+      .applyQuaternion(bulletObject.quaternion);
+    bulletObject.position.addVectors(
+      bulletData.initPosition,
+      directionVector.multiplyScalar(
+        (bulletSpeed * (now - bulletData.timestamp)) / 1000
+      )
+    );
+  });
+
   return (
-    <mesh
-      position={bulletData.initPosition.toArray()}
-      quaternion={bulletData.initQuaternion.toArray()}
-    >
+    <mesh ref={ref} quaternion={bulletData.initQuaternion}>
       <sphereGeometry args={[0.02]} />
       <meshStandardMaterial color="grey" />
     </mesh>
