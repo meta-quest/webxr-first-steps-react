@@ -11,6 +11,7 @@ import React from "react";
 import { create } from "zustand";
 import { generateUUID } from "three/src/math/MathUtils";
 import { useFrame } from "@react-three/fiber";
+import { useGLTF } from "@react-three/drei";
 
 const bulletSpeed = 10;
 const forwardVector = new Vector3(0, 0, -1);
@@ -63,6 +64,8 @@ type BulletProps = {
   bulletData: BulletData;
 };
 const Bullet = ({ bulletData }: BulletProps) => {
+  const { scene } = useGLTF("assets/blaster.glb");
+  const bulletPrototype = scene.getObjectByName("bullet")! as Mesh;
   const ref = React.useRef<Mesh>(null);
   useFrame(() => {
     const now = performance.now();
@@ -79,9 +82,11 @@ const Bullet = ({ bulletData }: BulletProps) => {
   });
 
   return (
-    <mesh ref={ref} quaternion={bulletData.initQuaternion}>
-      <sphereGeometry args={[0.02]} />
-      <meshStandardMaterial color="grey" />
-    </mesh>
+    <mesh
+      ref={ref}
+      geometry={bulletPrototype.geometry}
+      material={bulletPrototype.material}
+      quaternion={bulletData.initQuaternion}
+    ></mesh>
   );
 };

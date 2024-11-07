@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Mesh, Quaternion, Vector3 } from "three";
+import { Quaternion, Vector3 } from "three";
 import {
   useXRControllerButtonEvent,
   useXRInputSourceStateContext,
@@ -13,32 +13,25 @@ import {
 
 import React from "react";
 import { useBulletStore } from "./bullets";
+import { useGLTF } from "@react-three/drei";
 
 export const Gun = () => {
-  const barrelRef = React.useRef<Mesh>(null);
   const state = useXRInputSourceStateContext("controller");
-
+  const { scene } = useGLTF("assets/blaster.glb");
+  const bulletPrototype = scene.getObjectByName("bullet")!;
   useXRControllerButtonEvent(state, "xr-standard-trigger", (state) => {
-    if (state === "pressed" && barrelRef.current) {
+    if (state === "pressed") {
       useBulletStore
         .getState()
         .addBullet(
-          barrelRef.current.getWorldPosition(new Vector3()),
-          barrelRef.current.getWorldQuaternion(new Quaternion())
+          bulletPrototype.getWorldPosition(new Vector3()),
+          bulletPrototype.getWorldQuaternion(new Quaternion())
         );
     }
   });
 
-  return (
-    <group rotation-x={-Math.PI / 8}>
-      <mesh ref={barrelRef}>
-        <boxGeometry args={[0.035, 0.05, 0.16]} />
-        <meshStandardMaterial color="orange" />
-      </mesh>
-      <mesh rotation-x={Math.PI / 2} position={[0, -0.05, 0.05]}>
-        <boxGeometry args={[0.025, 0.04, 0.1]} />
-        <meshStandardMaterial color="grey" />
-      </mesh>
-    </group>
-  );
+  return <primitive object={scene} />;
 };
+
+// preload the gun model so that it's ready when the user enters VR
+useGLTF.preload("assets/blaster.glb");
