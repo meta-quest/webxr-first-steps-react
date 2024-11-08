@@ -2,7 +2,7 @@
     <img src="./tutorial/assets/webxr-first-steps.png" style="max-width:376px"/>
 </p>
 
-Welcome to **WebXR First Steps (React)**! This **2-hour** tutorial is designed to help you take your first steps into developing immersive WebXR experiences using [React Three XR](https://pmndrs.github.io/xr/docs/getting-started/introduction). Whether you’re a web developer looking to expand your skillset or a hobbyist interested in creating virtual reality (VR) applications, this tutorial will guide you through the fundamentals of building interactive 3D worlds for the web.
+Welcome to **WebXR First Steps (React)**! This **2-hour** tutorial is designed to help you take your first steps into developing immersive WebXR experiences using [React Three XR](https://pmndrs.github.io/xr/docs/). Whether you’re a web developer looking to expand your skillset or a hobbyist interested in creating virtual reality (VR) applications, this tutorial will guide you through the fundamentals of building interactive 3D worlds for the web.
 
 ## What You’ll Build
 

@@ -11,8 +11,7 @@ import {
   useXRControllerButtonEvent,
   useXRInputSourceStateContext,
 } from "@react-three/xr";
-
-import React from "react";
+import { useRef } from "react";
 import { useBulletStore } from "./bullets";
 
 export const Gun = () => {
@@ -20,7 +19,7 @@ export const Gun = () => {
   const gamepad = state.inputSource.gamepad;
   const { scene } = useGLTF("assets/blaster.glb");
   const bulletPrototype = scene.getObjectByName("bullet")!;
-  const soundRef = React.useRef<PAudio>(null);
+  const soundRef = useRef<PAudio>(null);
   useXRControllerButtonEvent(state, "xr-standard-trigger", (state) => {
     if (state === "pressed") {
       useBulletStore
