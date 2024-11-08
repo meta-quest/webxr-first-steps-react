@@ -6,9 +6,9 @@
  */
 
 import { PositionalAudio, Text } from "@react-three/drei";
+import { useRef, useEffect } from "react";
 
 import { PositionalAudio as PAudio } from "three";
-import React from "react";
 import { create } from "zustand";
 
 type ScoreStore = {
@@ -26,9 +26,9 @@ export const Score = () => {
     return clampedScore.toString().padStart(4, "0");
   };
   const score = useScoreStore((state) => state.score);
-  const soundRef = React.useRef<PAudio>(null);
+  const soundRef = useRef<PAudio>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (score > 0) {
       const scoreSound = soundRef.current!;
       if (scoreSound.isPlaying) scoreSound.stop();

@@ -90,8 +90,6 @@ const Bullet = ({ bulletData }: BulletProps) => {
 Now that we have a `Bullet` component, we can create `Bullets` to render all bullets in the scene. This component retrieves the array of bullets from Zustand and renders a `Bullet` component for each one.
 
 ```tsx
-import React from "react";
-
 export const Bullets = () => {
   const bullets = useBulletStore((state) => state.bullets);
   return (
@@ -117,11 +115,11 @@ We’ll start by creating a reference to the main barrel mesh. This reference al
 Replace `gun.tsx` with the following:
 
 ```tsx
-import React from "react";
+import { useRef } from "react"
 
 export const Gun = () => {
   // Reference for the barrel
-  const barrelRef = React.useRef<Mesh>(null);
+  const barrelRef = useRef<Mesh>(null);
 
   return (
     <group rotation-x={-Math.PI / 8}>
@@ -173,9 +171,12 @@ export const Gun = () => {
 };
 ```
 
+- **Controller State**: The `useXRInputSourceStateContext("controller)` hook from @react-three/xr allows to get the state of the current controller.
+- **Listen to Trigger State**: The `useXRControllerButtonEvent` hook enables us to listen to the state changes of the `"xr-standard-trigger"` button. Once the state is equal to `"pressed"`, we spawn the bullet at the world position and rotation of the barrel.
+
 ## Summary
 
-In this chapter, we added state management with Zustand to track bullets, created a `Bullets` component to render them, and updated the `Gun` component to spawn bullets when the trigger is pressed. This sets the stage for more complex interactions, like moving these bullets, which we’ll cover in the next chapter.
+In this chapter, we added state management with Zustand to track bullets, created a `Bullets` component to render them, and updated the `Gun` component to spawn bullets when the trigger is pressed. In the next chapter, we'll cover moving the spawned bullets.
 
 Here’s what our scene looks like after adding the bullet spawning feature:
 

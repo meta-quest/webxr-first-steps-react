@@ -4,11 +4,11 @@ Welcome to Chapter 1 of our WebXR tutorial! In this chapter, you’ll learn how 
 
 ## React Three Fiber Overview
 
-React is a well-known choice for building websites. React Three Fiber (R3F) extends React’s capabilities beyond 2D websites, enabling developers to create 3D scenes declaratively. Instead of HTML elements, R3F allows us to work directly with Three.js objects, streamlining 3D development in React.
+React is a well-known choice for building websites. React Three Fiber (R3F) extends React’s capabilities beyond 2D websites, enabling developers to create 3D scenes declaratively. Instead of HTML elements, R3F allows us to work directly with Three.js objects, enabling 3D development in React.
 
 ### Using React Three XR
 
-In combination with React Three XR, we can add WebXR support to make fully fledged AR or VR experiences. In this tutorial, we’ll use R3F and React Three XR to create a fully immersive VR mini-game.
+In combination with React Three XR, we can add WebXR support to make fully fledged Augmented Reality (AR) or Virtual Reality (VR) experiences (XR refers to AR, VR, and everything in between). In this tutorial, we’ll use R3F and React Three XR to create a fully immersive VR mini-game.
 
 ## Exploring the Starting Code in `index.tsx`
 
@@ -22,9 +22,25 @@ Let’s take a look at some of the essential parts of our starting code:
 
 1. **`Canvas` Component**: The `Canvas` is where our 3D scene is defined, much like the root `div` element in a standard React application.
 
-2. **`PerspectiveCamera`**: This component sets the position and field of view (fov) for the non-XR camera, providing a starting view for the scene.
+```tsx
+<Canvas style={{...}}>
+  //scene description
+</Canvas>
+```
+
+2. **`PerspectiveCamera`**: This component sets the position and field of view (fov) for the camera when not in XR, providing a starting view for the scene.
+
+```tsx
+<PerspectiveCamera makeDefault position={[0, 1.6, 2]} fov={75} />
+```
 
 3. **`Environment`**: The `Environment` component provides ambient lighting for the scene with a preset, simulating a well-lit warehouse.
+
+```tsx
+<Environment preset="warehouse" />
+```
+
+
 
 4. **Floor Mesh**: We define a basic floor mesh using a plane geometry, rotated to serve as the ground.
 
@@ -94,7 +110,7 @@ The starting code includes VR support using React Three XR. Here’s a breakdown
 
 1. **`createXRStore`**: This function sets up the `xrStore`, handling everything WebXR-related for our app. It has an `emulate` setting to specify the default positions and orientations of both controllers when using IWER emulation.
 
-2. **`XR` Component**: This component enables VR features in the scene by accessing the `xrStore`.
+2. **`XR` Component**: This component provides the `xrStore` to all components in the scene, giving them access to the current state of the XR session.
 
 3. **Enter VR Button**: We call `xrStore.enterVR()` to launch into the WebXR experience when the user clicks the “Enter VR” button outside the Canvas.
 
@@ -104,11 +120,9 @@ To start our target practice experience, let’s add a simple gun model to the r
 
 ### Creating `gun.tsx`
 
-Create a new file named `gun.tsx` in the same directory as `index.tsx` to define a basic gun model:
+Create a new file named `gun.tsx` in the same directory as `index.tsx` to define a basic gun model. The gun model uses the same concepts as before including meshes, geometries, and materials. In addition, we are using a **group**, which allows to group multiple 3D objects together.
 
 ```tsx
-import React from "react";
-
 export const Gun = () => {
   return (
     <group rotation-x={-Math.PI / 8}>

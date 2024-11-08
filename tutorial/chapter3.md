@@ -1,6 +1,6 @@
 # Chapter 3: Animating Bullet Objects
 
-In this chapter, we’ll make the bullets move forward in the direction the controller is pointing and disappear after a set time. This involves managing each bullet’s movement and lifespan to ensure they don’t remain in the scene indefinitely.
+In this chapter, we’ll make the bullets move forward in their spawn direction and disappear after a set time. This involves managing each bullet’s movement and lifespan to ensure they don’t remain in the scene indefinitely.
 
 ## Constants for Bullet Behavior
 
@@ -12,8 +12,8 @@ const forwardVector = new Vector3(0, 0, -1);
 const bulletTimeToLive = 2;
 ```
 
-- **`forwardVector`**: This vector points forward along the negative Z-axis, representing the default direction bullets will move.
 - **`bulletSpeed`**: Sets the speed of bullets, here set to 10 units per second.
+- **`forwardVector`**: This vector points forward along the negative Z-axis, representing the default direction bullets will move.
 - **`bulletTimeToLive`**: Defines how long each bullet stays in the scene before being removed (2 seconds in this example).
 
 ## Extending Zustand for Bullet Lifespan
@@ -62,7 +62,7 @@ export const useBulletStore = create<BulletStore>((set) => ({
 
 ## Updating Bullet Position Over Time
 
-To animate each bullet, we’ll use the `useFrame` hook from `@react-three/fiber`. The `useFrame` hook is part of the **frameloop** in React Three Fiber, which runs continuously on every frame to update the scene. By using `useFrame`, we can update the position of each bullet in real-time, making them move smoothly forward as long as they’re active.
+To animate each bullet, we’ll use the `useFrame` hook from `@react-three/fiber`. The `useFrame` hook is part of the **frameloop** in React Three Fiber, which runs continuously on every frame to update the scene. By using `useFrame`, we can update the position of each bullet in real-time, making them move smoothly forward.
 
 ### Bullet Component
 
@@ -70,15 +70,15 @@ In the `Bullet` component, we add `useFrame` to update each bullet’s position 
 
 ```tsx
 import { Mesh, Vector3 } from "three";
-import React from "react";
 import { useFrame } from "@react-three/fiber";
+import { useRef } from "react"
 
 type BulletProps = {
   bulletData: BulletData;
 };
 
 const Bullet = ({ bulletData }: BulletProps) => {
-  const ref = React.useRef<Mesh>(null);
+  const ref = useRef<Mesh>(null);
 
   useFrame(() => {
     const now = performance.now();
@@ -107,11 +107,11 @@ Let's break this down:
 
 - **`useFrame` Hook**: Runs each frame, updating the bullet’s position to move it forward over time.
 - **Direction Calculation**: We apply the bullet’s initial quaternion to the `forwardVector`, aligning its movement with the orientation of the gun when it was fired.
-- **Position Update**: The bullet’s position is updated along this direction at the specified `bulletSpeed`. This creates a consistent forward motion.
+- **Position Update**: The bullet’s position is updated to the sum of the initial position and the direction vector multiplied by the `bulletSpeed` and the time passed since the bullet was spawned. This creates a consistent forward motion.
 
 ## Summary
 
-In this chapter, you’ve enhanced your WebXR scene by animating the bullets. Now, when fired, the bullets travel in the direction the controller is pointing and disappear after a set time. This addition introduces dynamic motion to your scene and maintains performance by removing bullets after they’re no longer needed.
+In this chapter, we've animated the bullets. Now, when fired, the bullets travel in the direction the controller is pointing and disappear after a set time. This addition introduces dynamic motion to your scene and maintains performance by removing bullets after they’re no longer needed.
 
 Here’s what our scene looks like with the bullet animation feature:
 

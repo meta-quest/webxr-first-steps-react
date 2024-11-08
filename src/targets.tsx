@@ -6,7 +6,7 @@
  */
 
 import { Object3D } from "three";
-import React from "react";
+import { useMemo, useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export const targets = new Set<Object3D>();
@@ -16,9 +16,9 @@ type TargetProps = {
 };
 export const Target = ({ targetIdx }: TargetProps) => {
   const { scene } = useGLTF("assets/target.glb");
-  const target = React.useMemo(() => scene.clone(), [scene]);
+  const target = useMemo(() => scene.clone(), [scene]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     target.position.set(
       Math.random() * 10 - 5,
       targetIdx * 2 + 1,

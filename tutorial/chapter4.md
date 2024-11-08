@@ -20,8 +20,6 @@ import { Gltf } from "@react-three/drei";
 
 The space station provides an immersive backdrop for your WebXR experience, setting the scene for the interaction to come.
 
-![Space Station Model](./assets/space-station.png)
-
 ## 2. Adding the Blaster Model to the Gun Component
 
 Now let’s replace the basic geometry of the gun with a 3D blaster model.
@@ -38,7 +36,6 @@ import {
   useXRControllerButtonEvent,
   useXRInputSourceStateContext,
 } from "@react-three/xr";
-import React from "react";
 import { useBulletStore } from "./bullets";
 import { useGLTF } from "@react-three/drei";
 
@@ -83,6 +80,7 @@ We’ll get the `bulletPrototype` in `Bullet`, allowing each bullet to inherit i
 
 ```tsx
 import { useGLTF } from "@react-three/drei";
+import { useRef } from "react"
 
 type BulletProps = {
   bulletData: BulletData;
@@ -91,7 +89,7 @@ type BulletProps = {
 const Bullet = ({ bulletData }: BulletProps) => {
   const { scene } = useGLTF("assets/blaster.glb");
   const bulletPrototype = scene.getObjectByName("bullet")! as Mesh;
-  const ref = React.useRef<Mesh>(null);
+  const ref = useRef<Mesh>(null);
   useFrame(() => {
     const now = performance.now();
     const bulletObject = ref.current!;
@@ -111,7 +109,7 @@ const Bullet = ({ bulletData }: BulletProps) => {
       ref={ref}
       geometry={bulletPrototype.geometry}
       material={bulletPrototype.material}
-      quaternion={bulletData.initQuaternion.toArray()}
+      quaternion={bulletData.initQuaternion}
     ></mesh>
   );
 };
@@ -138,11 +136,11 @@ export const targets = new Set<Object3D>();
 
 ### Rendering the Targets
 
-With the `TargetStore` in place, we’ll load the target model and position three targets at random points. Each target is cloned, added to the store, and rendered with random initial positions.
+With the `TargetStore` in place, we’ll load the target model and position three targets at random points. Each target is cloned, added to the store, and rendered with random positions.
 
 ```tsx
-import React from "react";
 import { useGLTF } from "@react-three/drei";
+import { useEffect, useMemo } from "react";
 
 type TargetProps = {
   targetIdx: number;
@@ -150,9 +148,9 @@ type TargetProps = {
 
 export const Target = ({ targetIdx }: TargetProps) => {
   const { scene } = useGLTF("assets/target.glb");
-  const target = scene.clone();
+  const target = useMemo(() => scene.clone(), [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     target.position.set(
       Math.random() * 10 - 5,
       targetIdx * 2 + 1,

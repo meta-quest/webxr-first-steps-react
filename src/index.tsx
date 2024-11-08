@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Canvas, addEffect, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Gltf, PerspectiveCamera } from "@react-three/drei";
 import { XR, createXRStore } from "@react-three/xr";
 
 import { Bullets } from "./bullets";
 import { Gun } from "./gun";
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { Score } from "./score";
 import { Target } from "./targets";
