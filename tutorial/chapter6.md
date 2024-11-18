@@ -13,10 +13,11 @@ In `gun.tsx`, we’ll add a sound for when the player fires the blaster.
 ```tsx
 import { PositionalAudio as PAudio } from "three";
 import { PositionalAudio } from "@react-three/drei";
+import { useRef } from "react"
 
 export const Gun = () => {
   // ... existing code
-  const soundRef = React.useRef<PAudio>(null);
+  const soundRef = useRef<PAudio>(null);
 
   useXRControllerButtonEvent(state, "xr-standard-trigger", (state) => {
     if (state === "pressed") {
@@ -46,12 +47,13 @@ In `score.tsx`, we play a sound whenever the score changes.
 ```tsx
 import { PositionalAudio } from "@react-three/drei";
 import { PositionalAudio as PAudio } from "three";
+import { useEffect, useRef } from "react";
 
 export const Score = () => {
   const score = useScoreStore((state) => state.score);
-  const soundRef = React.useRef<PAudio>(null);
+  const soundRef = useRef<PAudio>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (score > 0) {
       const scoreSound = soundRef.current!;
       if (scoreSound.isPlaying) scoreSound.stop();
@@ -78,6 +80,7 @@ We’ll add haptic feedback to give tactile responses when shooting. This vibrat
 
 ```tsx
 export const Gun = () => {
+  // ... existing code
   const gamepad = state.inputSource.gamepad;
   useXRControllerButtonEvent(state, "xr-standard-trigger", (state) => {
     if (state === "pressed") {
@@ -90,7 +93,6 @@ export const Gun = () => {
 ```
 
 - **Haptic Feedback**: The `pulse` method triggers a vibration at 60% intensity for 100 milliseconds.
-- **Fallback**: A try-catch isn’t necessary here as the `?` safely handles missing haptic actuators.
 
 ## 3. Adding Visual Feedback with GSAP
 
@@ -152,16 +154,19 @@ Congratulations! You’ve completed the WebXR First Steps tutorial, building a f
 
 ![Shrinking Targets](./assets/chapter6.gif)
 
+[View full changes made in this chapter](https://github.com/meta-quest/webxr-first-steps-react/compare/chapter5...chapter6)
+
 ## What’s Next?
 
 Though the tutorial is complete, your journey with WebXR has only just begun! Here are some ways you can continue to expand your game:
 
+- **Augmented Reality Mode**: Experience your game in AR by allowing adding an `enterAR` button.
 - **Dual Wielding**: Add a blaster to the other controller for a dual-wielding experience.
+- **Larger Map**: Use a larger map, spawn targets everywhere, and add [teleportation](https://pmndrs.github.io/xr/docs/tutorials/teleport).
 - **Timed Challenge**: Introduce a timer to create a race-against-the-clock gameplay style.
 - **Moving Targets**: Add difficulty by having targets move around the scene.
 - **Exploding Targets**: Make the targets explode with visual effects when hit.
-- **And More!**: Experiment with new features to personalize and expand your game.
+
+Beyond expanding your game, you can also check out the [react-three/xr docs](https://pmndrs.github.io/xr/docs/) for more tutorials and insights into what is possible in WebXR using react.
 
 Thank you for following along! Enjoy building even more with WebXR. Happy coding!
-
-[View full changes made in this chapter](https://github.com/meta-quest/webxr-first-steps-react/compare/chapter5...chapter6)

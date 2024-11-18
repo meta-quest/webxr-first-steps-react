@@ -1,6 +1,6 @@
 # Chapter 5: Making It a Game
 
-In this chapter, we’ll add a proximity-based hit test for the targets and implement a scoreboard to track the player’s score. These additions make the scene more interactive and engaging, transforming it into a simple game.
+In this chapter, we’ll add a proximity-based hit test for the targets and implement a scoreboard to track the player’s score. These additions make the scene more interactive and engaging, turning our app into a simple game.
 
 ## 1. Setting Up the Scoreboard
 
@@ -29,7 +29,6 @@ export const useScoreStore = create<ScoreStore>((set) => ({
 Next, we’ll render the score using the `Text` component from `@react-three/drei`. This component provides high-quality, customizable text rendering, ideal for showing the score on a monitor in the scene.
 
 ```tsx
-import React from "react";
 import { Text } from "@react-three/drei";
 import { useScoreStore } from "./score";
 
@@ -68,11 +67,11 @@ To determine if a bullet hits a target, we’ll use a proximity-based hit test. 
 
 ### Updating `bullet.tsx`
 
-In `bullet.tsx`, we’ll import the target and score stores and implement the hit detection logic inside the `Bullet` component.
+In `bullet.tsx`, we’ll import the the score store and targets and implement the hit detection logic inside the `Bullet` component.
 
 ```tsx
 import { useScoreStore } from "./score";
-import { useTargetStore } from "./targets";
+import { targets } from "./targets";
 
 const Bullet = ({ bulletPrototype, bulletData }: BulletProps) => {
   // ... existing code
@@ -111,7 +110,7 @@ This hit test works effectively for our game since the targets are round and fac
 
 ## Summary
 
-In this chapter, you’ve turned your WebXR experience into a simple game by adding a hit test and a scoreboard. The proximity-based hit test registers hits when bullets are near targets, while the scoreboard tracks the player’s score and updates in real time, adding an engaging, interactive element to the scene.
+In this chapter, you’ve turned your WebXR experience into a simple game by adding a hit test and a scoreboard. The proximity-based hit test registers hits when bullets are near targets, while the scoreboard tracks the player’s score and updates in real time, making our game playable.
 
 Here’s what the game looks like with hit detection and scoring:
 
