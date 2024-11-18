@@ -1,15 +1,13 @@
 {
-  "name": "wfs-react",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "webxr-first-steps-react",
+  "private": true,
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack serve --mode development"
+    "dev": "webpack serve --mode development",
+    "format": "prettier --write ./src/**/*"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Felix Zhang <fe1ix@meta.com>",
+  "license": "MIT",
   "dependencies": {
     "@react-three/drei": "^9.115.0",
     "@react-three/fiber": "^8.17.10",

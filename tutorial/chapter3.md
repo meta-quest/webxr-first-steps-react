@@ -1,6 +1,6 @@
 # Chapter 3: Animating Bullet Objects
 
-In this chapter, we’ll make the bullets move forward in their spawn direction and disappear after a set time. This involves managing each bullet’s movement and lifespan to ensure they don’t remain in the scene indefinitely.
+In this chapter, we’ll make the bullets move forward in the direction they face when spawned, and disappear after a set time. This involves managing each bullet’s movement and lifespan to ensure they don’t remain in the scene indefinitely.
 
 ## Constants for Bullet Behavior
 
@@ -71,7 +71,7 @@ In the `Bullet` component, we add `useFrame` to update each bullet’s position 
 ```tsx
 import { Mesh, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react"
+import { useRef } from "react";
 
 type BulletProps = {
   bulletData: BulletData;
@@ -111,7 +111,7 @@ Let's break this down:
 
 ## Summary
 
-In this chapter, we've animated the bullets. Now, when fired, the bullets travel in the direction the controller is pointing and disappear after a set time. This addition introduces dynamic motion to your scene and maintains performance by removing bullets after they’re no longer needed.
+In this chapter, we've enhanced our WebXR experience by animating the bullets. Now, when fired, the bullets travel in the direction the controller is pointing and disappear after a set time. This addition introduces dynamic motion to your scene and maintains performance by removing bullets after they’re no longer needed.
 
 Here’s what our scene looks like with the bullet animation feature:
 

@@ -110,7 +110,7 @@ This hit test works effectively for our game since the targets are round and fac
 
 ## Summary
 
-In this chapter, you’ve turned your WebXR experience into a simple game by adding a hit test and a scoreboard. The proximity-based hit test registers hits when bullets are near targets, while the scoreboard tracks the player’s score and updates in real time, making our game playable.
+In this chapter, you’ve turned your WebXR experience into a simple game by adding a hit test and a scoreboard. The proximity-based hit test registers hits when bullets are near targets, while the scoreboard tracks the player’s score and updates in real time, adding an interactive element to the scene.
 
 Here’s what the game looks like with hit detection and scoring:
 

@@ -115,7 +115,7 @@ We’ll start by creating a reference to the main barrel mesh. This reference al
 Replace `gun.tsx` with the following:
 
 ```tsx
-import { useRef } from "react"
+import { useRef } from "react";
 
 export const Gun = () => {
   // Reference for the barrel
@@ -171,12 +171,12 @@ export const Gun = () => {
 };
 ```
 
-- **Controller State**: The `useXRInputSourceStateContext("controller)` hook from @react-three/xr allows to get the state of the current controller.
+- **Controller State**: The `useXRInputSourceStateContext("controller")` hook from @react-three/xr allows us to get the state of the current controller.
 - **Listen to Trigger State**: The `useXRControllerButtonEvent` hook enables us to listen to the state changes of the `"xr-standard-trigger"` button. Once the state is equal to `"pressed"`, we spawn the bullet at the world position and rotation of the barrel.
 
 ## Summary
 
-In this chapter, we added state management with Zustand to track bullets, created a `Bullets` component to render them, and updated the `Gun` component to spawn bullets when the trigger is pressed. In the next chapter, we'll cover moving the spawned bullets.
+In this chapter, we added state management with Zustand to track bullets, created a `Bullets` component to render them, and updated the `Gun` component to spawn bullets when the trigger is pressed. This sets the stage for more complex interactions, like moving these bullets, which we’ll cover in the next chapter.
 
 Here’s what our scene looks like after adding the bullet spawning feature:
 

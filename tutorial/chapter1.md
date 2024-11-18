@@ -8,7 +8,7 @@ React is a well-known choice for building websites. React Three Fiber (R3F) exte
 
 ### Using React Three XR
 
-In combination with React Three XR, we can add WebXR support to make fully fledged Augmented Reality (AR) or Virtual Reality (VR) experiences (XR refers to AR, VR, and everything in between). In this tutorial, we’ll use R3F and React Three XR to create a fully immersive VR mini-game.
+In combination with React Three XR, we can add WebXR support to make full-fledged Augmented Reality (AR) or Virtual Reality (VR) experiences. In this tutorial, we’ll use R3F and React Three XR to create a fully immersive VR mini-game.
 
 ## Exploring the Starting Code in `index.tsx`
 
@@ -24,7 +24,7 @@ Let’s take a look at some of the essential parts of our starting code:
 
 ```tsx
 <Canvas style={{...}}>
-  //scene description
+  // scene description
 </Canvas>
 ```
 
@@ -39,8 +39,6 @@ Let’s take a look at some of the essential parts of our starting code:
 ```tsx
 <Environment preset="warehouse" />
 ```
-
-
 
 4. **Floor Mesh**: We define a basic floor mesh using a plane geometry, rotated to serve as the ground.
 
@@ -120,7 +118,7 @@ To start our target practice experience, let’s add a simple gun model to the r
 
 ### Creating `gun.tsx`
 
-Create a new file named `gun.tsx` in the same directory as `index.tsx` to define a basic gun model. The gun model uses the same concepts as before including meshes, geometries, and materials. In addition, we are using a **group**, which allows to group multiple 3D objects together.
+Create a new file named `gun.tsx` in the same directory as `index.tsx` to define a basic gun model, using the same concepts as before including meshes, geometries, and materials. In addition, we are using a `group`, which allows us to group multiple 3D objects together.
 
 ```tsx
 export const Gun = () => {
