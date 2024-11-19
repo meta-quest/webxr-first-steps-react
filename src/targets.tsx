@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { useEffect, useMemo } from "react";
+
 import { Object3D } from "three";
-import { useMemo, useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export const targets = new Set<Object3D>();

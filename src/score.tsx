@@ -6,7 +6,7 @@
  */
 
 import { PositionalAudio, Text } from "@react-three/drei";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { PositionalAudio as PAudio } from "three";
 import { create } from "zustand";

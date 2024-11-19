@@ -11,8 +11,9 @@ import {
   useXRControllerButtonEvent,
   useXRInputSourceStateContext,
 } from "@react-three/xr";
-import { useRef } from "react";
+
 import { useBulletStore } from "./bullets";
+import { useRef } from "react";
 
 export const Gun = () => {
   const state = useXRInputSourceStateContext("controller");

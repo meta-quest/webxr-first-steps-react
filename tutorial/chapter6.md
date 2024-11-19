@@ -13,7 +13,7 @@ In `gun.tsx`, we’ll add a sound for when the player fires the blaster.
 ```tsx
 import { PositionalAudio as PAudio } from "three";
 import { PositionalAudio } from "@react-three/drei";
-import { useRef } from "react"
+import { useRef } from "react";
 
 export const Gun = () => {
   // ... existing code

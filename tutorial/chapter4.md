@@ -80,7 +80,7 @@ We’ll get the `bulletPrototype` in `Bullet`, allowing each bullet to inherit i
 
 ```tsx
 import { useGLTF } from "@react-three/drei";
-import { useRef } from "react"
+import { useRef } from "react";
 
 type BulletProps = {
   bulletData: BulletData;
@@ -148,7 +148,7 @@ type TargetProps = {
 
 export const Target = ({ targetIdx }: TargetProps) => {
   const { scene } = useGLTF("assets/target.glb");
-  const target = useMemo(() => scene.clone(), [])
+  const target = useMemo(() => scene.clone(), []);
 
   useEffect(() => {
     target.position.set(

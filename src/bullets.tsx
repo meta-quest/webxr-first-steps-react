@@ -13,8 +13,8 @@ import gsap from "gsap";
 import { targets } from "./targets";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
-import { useScoreStore } from "./score";
 import { useRef } from "react";
+import { useScoreStore } from "./score";
 
 const bulletSpeed = 10;
 const forwardVector = new Vector3(0, 0, -1);
