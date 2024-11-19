@@ -17,7 +17,7 @@ type TargetProps = {
 };
 export const Target = ({ targetIdx }: TargetProps) => {
   const { scene } = useGLTF("assets/target.glb");
-  const target = useMemo(() => scene.clone(), [scene]);
+  const target = useMemo(() => scene.clone(), []);
 
   useEffect(() => {
     target.position.set(
