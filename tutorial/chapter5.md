@@ -30,7 +30,6 @@ Next, we’ll render the score using the `Text` component from `@react-three/dre
 
 ```tsx
 import { Text } from "@react-three/drei";
-import { useScoreStore } from "./score";
 
 export const Score = () => {
   const formatScoreText = (score: number) => {

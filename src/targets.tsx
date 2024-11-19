@@ -26,6 +26,6 @@ export const Target = ({ targetIdx }: TargetProps) => {
       -Math.random() * 5 - 5
     );
     targets.add(target);
-  }, [target]);
+  }, []);
   return <primitive object={target} />;
 };
