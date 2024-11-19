@@ -5,15 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Gltf, PerspectiveCamera } from "@react-three/drei";
 import { XR, createXRStore } from "@react-three/xr";
 
 import { Bullets } from "./bullets";
-import { Canvas } from "@react-three/fiber";
 import { Gun } from "./gun";
 import ReactDOM from "react-dom/client";
 import { Score } from "./score";
 import { Target } from "./targets";
+import gsap from "gsap";
 
 const xrStore = createXRStore({
   emulate: {
@@ -39,6 +40,13 @@ const xrStore = createXRStore({
   },
 });
 
+const GsapTicker = () => {
+  useFrame(() => {
+    gsap.ticker.tick();
+  });
+  return null;
+};
+
 const App = () => {
   return (
     <>
@@ -58,6 +66,7 @@ const App = () => {
         <Target targetIdx={1} />
         <Target targetIdx={2} />
         <Score />
+        <GsapTicker />
         <XR store={xrStore}></XR>
       </Canvas>
       <div
