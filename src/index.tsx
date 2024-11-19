@@ -5,13 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Environment, PerspectiveCamera } from "@react-three/drei";
+import { Environment, Gltf, PerspectiveCamera } from "@react-three/drei";
 import { XR, createXRStore } from "@react-three/xr";
 
 import { Bullets } from "./bullets";
 import { Canvas } from "@react-three/fiber";
 import { Gun } from "./gun";
 import ReactDOM from "react-dom/client";
+import { Target } from "./targets";
 
 const xrStore = createXRStore({
   emulate: {
@@ -50,23 +51,11 @@ const App = () => {
         <color args={[0x808080]} attach={"background"}></color>
         <PerspectiveCamera makeDefault position={[0, 1.6, 2]} fov={75} />
         <Environment preset="warehouse" />
-        <mesh rotation-x={-Math.PI / 2}>
-          <planeGeometry args={[6, 6]} />
-          <meshStandardMaterial color="white" />
-        </mesh>
-        <mesh position={[0.4, 0.75, -1.5]}>
-          <coneGeometry args={[0.6, 1.5]} />
-          <meshStandardMaterial color="purple" />
-        </mesh>
-        <mesh rotation-y={Math.PI / 4} position={[-0.8, 0.5, -1.5]}>
-          <boxGeometry />
-          <meshStandardMaterial color="orange" />
-        </mesh>
-        <mesh position={[0.6, 0.4, -0.5]} scale={1.2}>
-          <sphereGeometry args={[0.4]} />
-          <meshStandardMaterial color="red" />
-        </mesh>
         <Bullets />
+        <Gltf src="assets/spacestation.glb" />
+        <Target targetIdx={0} />
+        <Target targetIdx={1} />
+        <Target targetIdx={2} />
         <XR store={xrStore}></XR>
       </Canvas>
       <div
