@@ -9,9 +9,11 @@ import { Mesh, Quaternion, Vector3 } from "three";
 
 import { create } from "zustand";
 import { generateUUID } from "three/src/math/MathUtils.js";
+import { targets } from "./targets";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { useRef } from "react";
+import { useScoreStore } from "./score";
 
 const bulletSpeed = 10;
 const forwardVector = new Vector3(0, 0, -1);
@@ -79,6 +81,24 @@ const Bullet = ({ bulletData }: BulletProps) => {
         (bulletSpeed * (now - bulletData.timestamp)) / 1000
       )
     );
+
+    [...targets]
+      .filter((target) => target.visible)
+      .forEach((target) => {
+        const distance = target.position.distanceTo(bulletObject.position);
+        if (distance < 1) {
+          useBulletStore.getState().removeBullet(bulletData.id);
+
+          target.visible = false;
+          setTimeout(() => {
+            target.visible = true;
+            target.position.x = Math.random() * 10 - 5;
+            target.position.z = -Math.random() * 5 - 5;
+          }, 2000);
+
+          useScoreStore.getState().addScore();
+        }
+      });
   });
 
   return (
