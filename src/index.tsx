@@ -5,16 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Gltf, PerspectiveCamera } from "@react-three/drei";
+import { Environment, PerspectiveCamera } from "@react-three/drei";
 import { XR, createXRStore } from "@react-three/xr";
 
-import { Bullets } from "./bullets";
-import { Gun } from "./gun";
+import { Canvas } from "@react-three/fiber";
 import ReactDOM from "react-dom/client";
-import { Score } from "./score";
-import { Target } from "./targets";
-import gsap from "gsap";
 
 const xrStore = createXRStore({
   emulate: {
@@ -35,17 +30,7 @@ const xrStore = createXRStore({
       },
     },
   },
-  controller: {
-    right: Gun,
-  },
 });
-
-const GsapTicker = () => {
-  useFrame(() => {
-    gsap.ticker.tick();
-  });
-  return null;
-};
 
 const App = () => {
   return (
@@ -60,13 +45,10 @@ const App = () => {
         <color args={[0x808080]} attach={"background"}></color>
         <PerspectiveCamera makeDefault position={[0, 1.6, 2]} fov={75} />
         <Environment preset="warehouse" />
-        <Bullets />
-        <Gltf src="assets/spacestation.glb" />
-        <Target targetIdx={0} />
-        <Target targetIdx={1} />
-        <Target targetIdx={2} />
-        <Score />
-        <GsapTicker />
+        <mesh rotation-x={-Math.PI / 2}>
+          <planeGeometry args={[6, 6]} />
+          <meshStandardMaterial color="white" />
+        </mesh>
         <XR store={xrStore}></XR>
       </Canvas>
       <div
